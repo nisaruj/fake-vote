@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="//github.com/downloads/lafeber/world-flags-sprite/flags32.css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <meta charset="utf-8" />
+</head>
+<body>
+    <div align="center">
+        <h1>THE STREAM AWARD</h1>
+        <h2>Vote your favorite game.</h2>
+    </div>
+    <form>
+        <div align="center">
+            <div class="row" style="width: 25rem;">
+            <div class="col">
+                <input type="text" class="form-control" placeholder="First name">
+            </div>
+            <div class="col">
+                <input type="text" class="form-control" placeholder="Last name">
+            </div>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div align="center">
+        <div class="card-group" style="width: 25rem;">
+            <div class="card" style="width: 18rem;">
+                <img class="card-img-top" src="awesome.png" alt="Card image cap">
+                <div class="card-body">
+                    <h5 class="card-title">LOL Simulator</h5>
+                    <a href="#" class="btn btn-primary">VOTE</a>
+                </div>
+                <p id="ctimer1">???</p>
+            </div>
+            <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" src="pubg.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">PUBG</h5>
+                        <a href="#" class="btn btn-primary">VOTE</a>
+                    </div>
+                    <p id="ctimer2">???</p>
+            </div>
+        </div>
+        <br>
+        <h4>Recent voter</h4>
+        <div align="center" style="width: 25rem;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col" style="width: 5%">#</th>
+                    <th scope="col">Name</th>
+                </tr>
+            </thead>
+            <% for(var i=0;i<10;i++) { %>
+                <tr padding="0px">
+                    <th scope="row"><p id=<%= "c"+ i.toString() %>></th>
+                    <td><p id=<%= i %>></p></td>
+                </tr>
+            <% } %>
+        </table>
+        </div>
+        <pre>Happy April fools' day :D</pre>
+        <pre><a href="https://www.facebook.com/lolsimulator/">Please like our page!</a></pre>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io();
+        socket.on('timer', function(msg){
+            document.getElementById("ctimer1").innerHTML = "Vote count : " + msg.counter.toString();
+            document.getElementById("ctimer2").innerHTML = "Vote count : " + Math.floor((msg.counter+4)/9).toString();
+            for (var i=0;i<10;i++) {
+                document.getElementById(i.toString()).innerHTML = msg.fname[i];
+                document.getElementById("c"+i.toString()).innerHTML = msg.counter + Math.floor((msg.counter+4)/9) + i;
+            }
+        });
+    </script>
+</body>
