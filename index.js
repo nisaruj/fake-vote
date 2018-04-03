@@ -23,6 +23,10 @@ io.on('connection', function(socket){
 });
 
 setInterval(function(){
+    //ping every 5 minutes
+    if (counter % 300000 == 0){
+        http.get("http://streamaward.herokuapp.com");
+    }
     if (counter > 10){
         fname.shift();
     }
@@ -31,10 +35,6 @@ setInterval(function(){
     //console.log(fname);
     io.emit('timer', {counter: counter, fname: fname});
 }, 50);
-
-setInterval(function(){
-    http.get("http://streamaward.herokuapp.com");
-}, 300000);
 
 http.listen(server_port, function(){
     console.log('listening on %s', server_port);
