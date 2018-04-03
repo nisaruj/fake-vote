@@ -30,7 +30,11 @@ setInterval(function(){
     counter++;
     //console.log(fname);
     io.emit('timer', {counter: counter, fname: fname});
-},50);
+}, 50);
+
+setInterval(function(){
+    http.get("http://streamaward.herokuapp.com");
+}, 300000);
 
 http.listen(server_port, function(){
     console.log('listening on %s', server_port);
