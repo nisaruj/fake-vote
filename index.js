@@ -24,7 +24,7 @@ io.on('connection', function(socket){
 
 setInterval(function(){
     //ping every 5 minutes
-    if (counter % 300000 == 0){
+    if (counter % 6000 == 0){
         require("http").get("http://streamaward.herokuapp.com");
     }
     if (counter > 10){
